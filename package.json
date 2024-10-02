@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
+    "start": "next start",
     "prettier": "prettier -write",
     "lint": "next lint"
   },
@@ -24,7 +25,8 @@
     "next-hcaptcha": "^1.4.3",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "webpack": "^5.94.0"
   },
   "devDependencies": {
     "eslint": "^8.57.1",
