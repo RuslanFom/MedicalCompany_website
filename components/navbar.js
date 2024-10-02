@@ -74,22 +74,22 @@ const Navbar = ({ path }) => {
           spacing={4}
           mt={{ base: 4, md: 0 }}
         >
-          <LinkItem href="/works" path={path}>
+          <LinkItem href="/." path={path}>
             Home
           </LinkItem>
-          <LinkItem href="/skills" path={path}>
+          <LinkItem href="/leistungen" path={path}>
             Leistungen
           </LinkItem>
-          <LinkItem href="/contacts" path={path}>
+          <LinkItem href="/terminvereinbarung" path={path}>
             Terminvereinbarung
           </LinkItem>
-          <LinkItem href="/examples" path={path}>
+          <LinkItem href="/praxis" path={path}>
             Praxis
           </LinkItem>
-          <LinkItem href="/examples" path={path}>
+          <LinkItem href="/unternehmen" path={path}>
             Unternehmen
           </LinkItem>
-          <LinkItem href="/examples" path={path}>
+          <LinkItem href="/kontakt" path={path}>
             Kontakt
           </LinkItem>
         </Stack>
@@ -108,19 +108,19 @@ const Navbar = ({ path }) => {
                 <MenuItem as={MenuLink} href="/">
                   Home
                 </MenuItem>
-                <MenuItem as={MenuLink} href="/works">
+                <MenuItem as={MenuLink} href="/leistungen">
                   Leistungen
                 </MenuItem>
-                <MenuItem as={MenuLink} href="/examples">
+                <MenuItem as={MenuLink} href="/terminvereinbarung">
                   Terminvereinbarung
                 </MenuItem>
-                <MenuItem as={MenuLink} href="/skills">
+                <MenuItem as={MenuLink} href="/praxis">
                   Praxis
                 </MenuItem>
-                <MenuItem as={MenuLink} href="/contacts">
+                <MenuItem as={MenuLink} href="/unternehmen">
                   Unternehmen
                 </MenuItem>
-                <MenuItem as={MenuLink} href="/contacts">
+                <MenuItem as={MenuLink} href="/kontakt">
                   Kontakt
                 </MenuItem>
               </MenuList>
