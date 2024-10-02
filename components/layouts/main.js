@@ -7,14 +7,14 @@ const Main = ({ children, router }) => {
     <Box as="main" pb={8}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Company Medics website" />
+        <meta name="author" content="Ruslan Fomin" />
+        <link rel="shortcut icon" href="/cross.png" type="image/x-icon" />
         <title>Home - CompanyMedics GmbH</title>
       </Head>
       <Navbar path={router.asPath} />
 
-      <Container
-        px={{ base: "0px", sm: "16px" }}
-        maxW="container.2xl"
-        pt={20}>
+      <Container px={{ base: '0px', sm: '16px' }} maxW="container.2xl" pt={20}>
         {children}
       </Container>
     </Box>

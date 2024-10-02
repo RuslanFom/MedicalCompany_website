@@ -13,7 +13,7 @@ import NextLink from 'next/link'
 import ContactForm from './../components/contactForm'
 import Footer from '../components/footer'
 
-const Page = () => {
+const Home = () => {
   return (
     <Layout>
       <Container
@@ -497,4 +497,5 @@ const Page = () => {
   )
 }
 
-export default Page
+export default Home
+export { getServerSideProps } from '/components/Chakra';
