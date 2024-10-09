@@ -19,6 +19,7 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 import ThemeToggleButton from './Theme-toggle-button'
 import { useState } from 'react'
 import LanguageSwitcher from './LanguageSwitcher'
+import { useTranslation } from 'next-i18next'
 
 const LinkItem = ({ href, path, target, children, bg, ...props }) => {
   const isActive = path === href
@@ -94,25 +95,26 @@ const NavbarItem = ({
 }
 
 const Navbar = ({ path }) => {
+  const { t } = useTranslation('common')
   const [openMenu, setOpenMenu] = useState(null)
   const navItems = [
-    { href: '/', label: 'Home' },
+    { href: '/', label: t('nav.home') },
     {
       href: '/leistungen',
-      label: 'Leistungen',
+      label:  t('nav.services'),
       children: [
-        { href: '/leistungen', label: 'Überblick' },
-        { href: '/leistungen/arbeitsmedizin', label: 'Arbeitsmedizin' },
+        { href: '/leistungen', label: t('ser.over') },
+        { href: '/leistungen/arbeitsmedizin', label: t('ser.occup') },
         {
           href: '/leistungen/vorsorgeuntersuchungen',
-          label: 'Vorsorgeuntersuchungen'
+          label: t('ser.prev.exam')
         },
         {
           href: '/leistungen/gesundheitsmanagement',
-          label: 'Gesundheitsmanagement'
+          label: t('ser.health')
         },
-        { href: '/leistungen/arbeitspsychologie', label: 'Arbeitspsychologie' },
-        { href: '/leistungen/arbeitssicherheit', label: 'Arbeitssicherheit' }
+        { href: '/leistungen/arbeitspsychologie', label: t('ser.occup.psy') },
+        { href: '/leistungen/arbeitssicherheit', label: t('ser.occup.safe') }
       ]
     },
     {

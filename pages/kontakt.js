@@ -16,6 +16,7 @@ import NextLink from 'next/link'
 import { TimeIcon } from '@chakra-ui/icons'
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaFax } from 'react-icons/fa'
 import ContactForm from '../components/contactForm'
+import { useTranslation } from 'next-i18next'
 
 const WorkingHours = ({ day, hours }) => (
   <HStack justifyContent="space-between" width="100%">
@@ -25,13 +26,13 @@ const WorkingHours = ({ day, hours }) => (
 )
 
 const Kontakt = () => {
-
+  const { t } = useTranslation('common')
   return (
     <Layout title="kontakt">
       <Box borderRadius="lg" bg={useColorModeValue('gray.50', 'gray.800')} minH="100vh">
         <Container maxW="container.xl" pt={20} pb={4}>
           <Heading size="xl" mb={10} textAlign="center">
-            Kontakt
+            {t('nav.contact')}
           </Heading>
 
           <Flex direction={{ base: 'column', md: 'row' }} mb={10}>
@@ -58,15 +59,15 @@ const Kontakt = () => {
                 <Divider />
                 <Heading fontSize="20px" mt={5} mb={4}>
                   <TimeIcon mr={2} />
-                  Öffnungszeiten:
+                  {t('contact.time')}
                 </Heading>
-                <WorkingHours day="Montag - Freitag" hours="9:00 - 18:00" />
-                <WorkingHours day="Samstag" hours="10:00 - 14:00" />
-                <WorkingHours day="Sonntag" hours="Geschlossen" />
+                <WorkingHours day={t('contact.mon')} hours="9:00 - 18:00" />
+                <WorkingHours day={t('contact.sam')} hours="10:00 - 14:00" />
+                <WorkingHours day={t('contact.son')} hours={t('contact.close')} />
               </Box>
 
               <Divider />
-              <Heading fontSize="20px">Adresse:</Heading>
+              <Heading fontSize="20px">{t('contact.add')}</Heading>
               <VStack align="start" spacing={3}>
                 <HStack>
                   <Icon as={FaMapMarkerAlt} boxSize={6} />
@@ -103,7 +104,7 @@ const Kontakt = () => {
           <Box my="50px" align="center">
             <NextLink href="/">
               <Button borderRadius="3xl" bgGradient="linear(to-r, #3cd3ad, #6dd5fa)">
-                Zurück zur Startseite
+                {t('contact.button')}
               </Button>
             </NextLink>
           </Box>
