@@ -48,7 +48,7 @@ const NavbarItem = ({
   href,
   path,
   label,
-  children,
+  subItems,
   isOpen,
   onOpen,
   onClose
@@ -58,7 +58,7 @@ const NavbarItem = ({
   const activeColor = useColorModeValue('gray.900', 'white')
   const isHome = href === '/'
 
-  if (children) {
+  if (subItems) {
     return (
       <Menu isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
         <MenuButton
@@ -72,7 +72,7 @@ const NavbarItem = ({
           {label}
         </MenuButton>
         <MenuList>
-          {children.map((child, index) => (
+          {subItems.map((child, index) => (
             <MenuItem key={index} as={MenuLink} href={child.href}>
               {child.label}
             </MenuItem>
@@ -179,7 +179,7 @@ const Navbar = ({ path }) => {
                 href={item.href}
                 path={path}
                 label={item.label}
-                children={item.children}
+                subItems={item.children}
                 isOpen={openMenu === index}
                 onOpen={() => setOpenMenu(index)}
                 onClose={() => setOpenMenu(null)}
