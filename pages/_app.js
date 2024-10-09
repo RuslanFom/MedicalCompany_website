@@ -2,6 +2,7 @@ import Chakra from '../components/Chakra';
 import Layout from '../components/layouts/main'
 import { useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion';
+import { appWithTranslation } from 'next-i18next'
 
 const Website = ({ Component, pageProps, router }) => {
   useEffect(() => {
@@ -36,4 +37,4 @@ const Website = ({ Component, pageProps, router }) => {
   )
 }
 
-export default Website
+export default appWithTranslation(Website)

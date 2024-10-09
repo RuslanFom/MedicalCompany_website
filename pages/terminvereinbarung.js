@@ -9,7 +9,7 @@ const Terminvereinbarung = () => (
     </Container>
     <Box my={6} align="center">
       <NextLink href="/">
-        <Button colorScheme="teal">Return to home</Button>
+        <Button bgGradient="linear(to-r, #3cd3ad, #6dd5fa)">Return to home</Button>
       </NextLink>
     </Box>
   </Layout>
