@@ -54,6 +54,7 @@ const NavbarItem = ({
   onOpen,
   onClose
 }) => {
+  const { t } = useTranslation('common')
   const isActive = path === href
   const inactiveColor = useColorModeValue('gray.800', 'whiteAlpha.900')
   const activeColor = useColorModeValue('gray.900', 'white')
@@ -70,12 +71,12 @@ const NavbarItem = ({
           color={isActive ? activeColor : inactiveColor}
           _hover={{ textDecoration: 'none' }}
         >
-          {label}
+          {t(label)}
         </MenuButton>
         <MenuList>
           {subItems.map((child, index) => (
             <MenuItem key={index} as={MenuLink} href={child.href}>
-              {child.label}
+              {t(child.label)}
             </MenuItem>
           ))}
         </MenuList>
@@ -89,7 +90,7 @@ const NavbarItem = ({
       path={path}
       bg={isActive && !isHome ? 'grassTeal' : undefined}
     >
-      {label}
+      {t(label)}
     </LinkItem>
   )
 }
@@ -98,23 +99,23 @@ const Navbar = ({ path }) => {
   const { t } = useTranslation('common')
   const [openMenu, setOpenMenu] = useState(null)
   const navItems = [
-    { href: '/', label: t('nav.home') },
+    { href: '/', label: 'nav.home' },
     {
       href: '/leistungen',
-      label:  t('nav.services'),
+      label:  'nav.services',
       children: [
-        { href: '/leistungen', label: t('ser.over') },
-        { href: '/leistungen/arbeitsmedizin', label: t('ser.occup') },
+        { href: '/leistungen', label: 'ser.over' },
+        { href: '/leistungen/arbeitsmedizin', label: 'ser.occup' },
         {
           href: '/leistungen/vorsorgeuntersuchungen',
-          label: t('ser.prev.exam')
+          label: 'ser.prev.exam'
         },
         {
           href: '/leistungen/gesundheitsmanagement',
-          label: t('ser.health')
+          label: 'ser.health'
         },
-        { href: '/leistungen/arbeitspsychologie', label: t('ser.occup.psy') },
-        { href: '/leistungen/arbeitssicherheit', label: t('ser.occup.safe') }
+        { href: '/leistungen/arbeitspsychologie', label: 'ser.occup.psy' },
+        { href: '/leistungen/arbeitssicherheit', label: 'ser.occup.safe' }
       ]
     },
     {
