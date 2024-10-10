@@ -214,7 +214,7 @@ const Navbar = ({ path }) => {
                 <MenuList>
                   {navItems.map((item, index) => (
                     <MenuItem key={index} as={MenuLink} href={item.href}>
-                      {item.label}
+                      {t(item.label)}
                     </MenuItem>
                   ))}
                 </MenuList>
