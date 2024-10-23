@@ -3,6 +3,7 @@ import Layout from '../components/layouts/main'
 import { useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion';
 import { appWithTranslation } from 'next-i18next'
+import '../i18n' 
 
 const Website = ({ Component, pageProps, router }) => {
   useEffect(() => {
