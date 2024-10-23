@@ -120,24 +120,24 @@ const Navbar = ({ path }) => {
     },
     {
       href: '/terminvereinbarung',
-      label: 'Terminvereinbarung'
+      label: 'nav.appointment'
     },
     {
       href: '/praxis',
-      label: 'Praxis'
+      label: 'nav.practice'
     },
     {
       href: '/unternehmen',
-      label: 'Unternehmen',
+      label: 'nav.company',
       children: [
-        { href: '/unternehmen', label: 'Über uns' },
-        { href: '/unternehmen/impressum', label: 'Impressum' },
-        { href: '/unternehmen/datenschutz', label: 'Datenschutz' }
+        { href: '/unternehmen', label: 'com.about' },
+        { href: '/unternehmen/impressum', label: 'com.imprint' },
+        { href: '/unternehmen/datenschutz', label: 'com.policy' }
       ]
     },
     {
       href: '/kontakt',
-      label: 'Kontakt'
+      label: 'nav.contact'
     }
   ]
   return (
@@ -228,3 +228,4 @@ const Navbar = ({ path }) => {
 }
 
 export default Navbar
+export {getServerSideProps} from '../pages/index'

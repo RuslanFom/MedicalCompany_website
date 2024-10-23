@@ -158,3 +158,4 @@ const ContactForm = () => {
 }
 
 export default ContactForm
+export {getServerSideProps} from '../pages/index'
