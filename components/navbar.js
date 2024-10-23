@@ -144,7 +144,9 @@ const Navbar = ({ path }) => {
     <Box
       position="fixed"
       as="nav"
+      py="15px"
       w="100%"
+      h="80px"
       bg={useColorModeValue('#ffffff40', '#20202380')}
       backdropFilter="blur(10px)"
       zIndex={2}
@@ -156,50 +158,43 @@ const Navbar = ({ path }) => {
         align="center"
         justify="space-between"
       >
-        <Flex align="center" flexShrink={0}>
+        <Flex align="center" justify="space-between" w="100%">
           <Heading as="h1" size="lg" letterSpacing={'tighter'}>
             <Logo />
           </Heading>
-        </Flex>
 
-        <Stack
-          direction={{ base: 'column', md: 'row' }}
-          display={{ base: 'none', lg: 'flex' }}
-          width={{ base: 'full', md: 'auto' }}
-          alignItems="center"
-          justifyContent="center"
-          flexGrow={1}
-          spacing={4}
-          mt={{ base: 4, md: 0 }}
-        >
-          {navItems.map((item, index) => (
-            <Box
-              key={index}
-              onMouseEnter={() => setOpenMenu(index)}
-              onMouseLeave={() => setOpenMenu(null)}
-            >
-              <NavbarItem
-                href={item.href}
-                path={path}
-                label={item.label}
-                subItems={item.children}
-                isOpen={openMenu === index}
-                onOpen={() => setOpenMenu(index)}
-                onClose={() => setOpenMenu(null)}
-              />
+          <Stack
+            direction={{ base: 'column', md: 'row' }}
+            display={{ base: 'none', lg: 'flex' }}
+            width={{ base: 'full', md: 'auto' }}
+            alignItems="center"
+            justifyContent="center"
+            spacing={4}
+          >
+            {navItems.map((item, index) => (
+              <Box
+                key={index}
+                onMouseEnter={() => setOpenMenu(index)}
+                onMouseLeave={() => setOpenMenu(null)}
+              >
+                <NavbarItem
+                  href={item.href}
+                  path={path}
+                  label={item.label}
+                  subItems={item.children}
+                  isOpen={openMenu === index}
+                  onOpen={() => setOpenMenu(index)}
+                  onClose={() => setOpenMenu(null)}
+                />
+              </Box>
+            ))}
+          </Stack>
+
+          <Flex align="center">
+            <LanguageSwitcher />
+            <Box ml={2}>
+              <ThemeToggleButton />
             </Box>
-          ))}
-        </Stack>
-
-        <Flex
-          justify="flex-end"
-          align="center"
-          flex={{ base: 1, md: 'auto' }}
-          ml={{ base: 'auto', md: 0 }}
-        >
-          <LanguageSwitcher />
-          <Box px={2} py={5} align="right">
-            <ThemeToggleButton />
             <Box
               ml={2}
               display={{ base: 'inline-block', md: 'inline-block', lg: 'none' }}
@@ -220,7 +215,7 @@ const Navbar = ({ path }) => {
                 </MenuList>
               </Menu>
             </Box>
-          </Box>
+          </Flex>
         </Flex>
       </Container>
     </Box>
