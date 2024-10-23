@@ -144,38 +144,45 @@ const Navbar = ({ path }) => {
     <Box
       position="fixed"
       as="nav"
-      py="15px"
       w="100%"
-      h="80px"
+      h="100px"
       bg={useColorModeValue('#ffffff40', '#20202380')}
       backdropFilter="blur(10px)"
       zIndex={2}
+      display="flex"
+      alignItems="center"
     >
       <Container
         display="flex"
         px="40px"
         maxW="container.2xl"
-        align="center"
-        justify="space-between"
+        h="100%"
+        alignItems="center"
+        justifyContent="space-between"
       >
-        <Flex align="center" justify="space-between" w="100%">
+        <Flex align="center" h="100%">
           <Heading as="h1" size="lg" letterSpacing={'tighter'}>
             <Logo />
           </Heading>
+        </Flex>
 
+        <Flex justify="center" flex={1}>
           <Stack
             direction={{ base: 'column', md: 'row' }}
             display={{ base: 'none', lg: 'flex' }}
-            width={{ base: 'full', md: 'auto' }}
             alignItems="center"
             justifyContent="center"
             spacing={4}
+            h="100%"
           >
             {navItems.map((item, index) => (
               <Box
                 key={index}
                 onMouseEnter={() => setOpenMenu(index)}
                 onMouseLeave={() => setOpenMenu(null)}
+                h="100%"
+                display="flex"
+                alignItems="center"
               >
                 <NavbarItem
                   href={item.href}
@@ -189,33 +196,33 @@ const Navbar = ({ path }) => {
               </Box>
             ))}
           </Stack>
+        </Flex>
 
-          <Flex align="center">
-            <LanguageSwitcher />
-            <Box ml={2}>
-              <ThemeToggleButton />
-            </Box>
-            <Box
-              ml={2}
-              display={{ base: 'inline-block', md: 'inline-block', lg: 'none' }}
-            >
-              <Menu isLazy id="navbar-menu">
-                <MenuButton
-                  as={IconButton}
-                  icon={<HamburgerIcon />}
-                  variant="outline"
-                  aria-label="Options"
-                />
-                <MenuList>
-                  {navItems.map((item, index) => (
-                    <MenuItem key={index} as={MenuLink} href={item.href}>
-                      {t(item.label)}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
-            </Box>
-          </Flex>
+        <Flex align="center" h="100%">
+          <LanguageSwitcher />
+          <Box ml={2}>
+            <ThemeToggleButton />
+          </Box>
+          <Box
+            ml={2}
+            display={{ base: 'inline-block', md: 'inline-block', lg: 'none' }}
+          >
+            <Menu isLazy id="navbar-menu">
+              <MenuButton
+                as={IconButton}
+                icon={<HamburgerIcon />}
+                variant="outline"
+                aria-label="Options"
+              />
+              <MenuList>
+                {navItems.map((item, index) => (
+                  <MenuItem key={index} as={MenuLink} href={item.href}>
+                    {t(item.label)}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
+          </Box>
         </Flex>
       </Container>
     </Box>
