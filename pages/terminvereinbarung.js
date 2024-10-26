@@ -19,6 +19,8 @@ import NextLink from 'next/link'
 import { useTranslation } from 'next-i18next'
 import React, { useState } from 'react'
 import { CheckIcon } from '@chakra-ui/icons'
+import Calendar from '../components/Calendar';
+import ClientForm from '../components/ClientForm'
 
 const serviceCategories = [
   {
@@ -236,10 +238,14 @@ const serviceCategories = [
 
 const Terminvereinbarung = () => {
   const { t } = useTranslation('common')
+  const [currentStep, setCurrentStep] = useState(1)
   const [expandedIndex, setExpandedIndex] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedTime, setSelectedTime] = useState(null)
+  const [clientData, setClientData] = useState({})
   const [selectedServices, setSelectedServices] = useState([])
-  const [showExaminationType, setShowExaminationType] = useState(false);
-  const [examinationType, setExaminationType] = useState(null);
+  const [showExaminationType, setShowExaminationType] = useState(false)
+  const [examinationType, setExaminationType] = useState(null)
 
   const handleAccordionChange = index => {
     setExpandedIndex(expandedIndex === index ? null : index)
@@ -269,79 +275,57 @@ const Terminvereinbarung = () => {
     setExaminationType(type);
   };
 
-  return (
-    <Layout title="terminvereinbarung">
-      <Container
-        display="flex"
-        flexDirection="column"
-        maxW="full"
-        w="full"
-        px={0}
-        mt={5}
-      >
-        <Image
-          src="/images/praxis_head-daf80ec8.webp"
-          alt="leistungen"
-          h={{ base: '166.38px', md: '123.19px', lg: '248px', xl: '194px' }}
-          objectFit="cover"
-        />
-        <Heading
-          as="h1"
-          size="2xl"
-          position="absolute"
-          mx="50px"
-          mt="70px"
-          color="white"
-          textAlign="center"
-        >
-          Online Terminvereinbarung
-        </Heading>
+  const handleDateTimeSelect = (date, time) => {
+    setSelectedDate(date);
+    setSelectedTime(time);
+  };
 
-        <Container
-          py="70px"
-          mx="auto"
-          display="flex"
-          flexDirection="column"
-          maxW="container.xl"
-          w="100%"
-          px={4}
-          mt={5}
-          alignItems="center"
-        >
-          <Text
-            fontSize="md"
-            py="15px"
-            px="25px"
-            textAlign="center"
-            borderBottom="1px"
-            borderColor="gray.200"
-            mb={8}
-          >
-            Willkommen auf unserer Online-Terminbuchungsseite. In wenigen
-            Schritten können Sie einen Termin bei uns online buchen. Wir freuen
-            uns auf Sie!
-          </Text>
-          <Flex
-            direction={{ base: 'column', lg: 'row' }}
-            justify="center"
-            align="flex-start"
-            gap={8}
-            w="100%"
-            maxW="1000px"
-          >
-            <Box
-              width={{ base: '100%', lg: '70%' }}
-              bg="white"
-              p={6}
-              borderRadius="xl"
-              boxShadow="xl"
-            >
-              <Accordion
-                allowToggle
-                index={expandedIndex}
-                onChange={handleAccordionChange}
-              >
-                {serviceCategories.map((category, index) => (
+  const handleNextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handlePrevStep = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  const handleSubmit = async () => {
+    const bookingData = {
+      services: selectedServices,
+      examinationType,
+      date: selectedDate.toISOString(),
+      time: selectedTime,
+      clientData
+    };
+
+    try {
+      const response = await fetch('/api/book-appointment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      if (response.ok) {
+        // Показать сообщение об успешном бронировании
+        alert('Бронирование успешно завершено!');
+      } else {
+        // Показать сообщение об ошибке
+        alert('Ошибка при бронировании. Пожалуйста, попробуйте еще раз.');
+      }
+    } catch (error) {
+      console.error('Ошибка при бронировании:', error);
+      alert('Произошла ошибка. Пожалуйста, попробуйте позже.');
+    }
+  };
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <Box width={{ base: '100%', lg: '70%' }} bg="white" p={6} borderRadius="xl" boxShadow="xl">
+            <Accordion allowToggle index={expandedIndex} onChange={handleAccordionChange}>
+            {serviceCategories.map((category, index) => (
                   <AccordionItem
                     key={index}
                     borderWidth={expandedIndex === index ? '0' : '1px'}
@@ -426,10 +410,10 @@ const Terminvereinbarung = () => {
                     </AccordionPanel>
                   </AccordionItem>
                 ))}
-              </Accordion>
-              {showExaminationType && (
+            </Accordion>
+            {showExaminationType && (
               <Box mt={6}>
-                <Text fontWeight="bold" mb={2}>Bitte auswählen:</Text>
+               <Text fontWeight="bold" mb={2}>Bitte auswählen:</Text>
                 <SimpleGrid columns={2} spacing={4}>
                   <Box
                     p={4}
@@ -457,32 +441,62 @@ const Terminvereinbarung = () => {
               </Box>
             )}
           </Box>
+        );
+      case 2:
+        return (
+          <Box width={{ base: '100%', lg: '70%' }} bg="white" p={6} borderRadius="xl" boxShadow="xl">
+            <Text fontSize="2xl" mb={4}>Tag & Uhrzeit wählen</Text>
+            <Calendar onDateTimeSelect={handleDateTimeSelect} />
+          </Box>
+        );
+      case 3:
+        return (
+          <Box width={{ base: '100%', lg: '70%' }} bg="white" p={6} borderRadius="xl" boxShadow="xl">
+            <Text fontSize="2xl" mb={4}>Persönliche Daten</Text>
+            <ClientForm onSubmit={setClientData} />
+          </Box>
+        );
+      default:
+        return null;
+    }
+  };
 
-          <Box width={{ base: "100%", lg: "35%" }} mt={{ base: 8, lg: 0 }}>
-            <Text as="h3" fontSize="xl" fontWeight="bold" mb={4}>
-              Ihre Buchung
-            </Text>
-            <Box borderWidth={1} borderRadius="md" p={4}>
-              <Flex alignItems="center" mb={2}>
-                <Flex
-                  alignItems="center"
-                  justifyContent="center"
-                  bg="teal.500"
-                  color="white"
-                  borderRadius="full"
-                  width="24px"
-                  height="24px"
-                  mr={3}
-                >
-                  <Text fontSize="sm" fontWeight="bold">
-                    1
+
+  return (
+    <Layout title="terminvereinbarung">
+      <Container display="flex" flexDirection="column" maxW="full" w="full" px={0} mt={5}>
+        <Image
+          src="/images/praxis_head-daf80ec8.webp"
+          alt="leistungen"
+          h={{ base: '166.38px', md: '123.19px', lg: '248px', xl: '194px' }}
+          objectFit="cover"
+        />
+        <Heading as="h1" size="2xl" position="absolute" mx="50px" mt="70px" color="white" textAlign="center">
+          Online Terminvereinbarung
+        </Heading>
+
+        <Container py="70px" mx="auto" display="flex" flexDirection="column" maxW="container.xl" w="100%" px={4} mt={5} alignItems="center">
+          <Text fontSize="md" py="15px" px="25px" textAlign="center" borderBottom="1px" borderColor="gray.200" mb={8}>
+            Willkommen auf unserer Online-Terminbuchungsseite. In wenigen Schritten können Sie einen Termin bei uns online buchen. Wir freuen uns auf Sie!
+          </Text>
+          <Flex direction={{ base: 'column', lg: 'row' }} justify="center" align="flex-start" gap={8} w="100%" maxW="1000px">
+            {renderStep()}
+
+            <Box width={{ base: "100%", lg: "35%" }} mt={{ base: 8, lg: 0 }}>
+              <Text as="h3" fontSize="xl" fontWeight="bold" mb={4}>
+                Ihre Buchung
+              </Text>
+              <Box borderWidth={1} borderRadius="md" p={4}>
+                <Flex alignItems="center" mb={2}>
+                  <Flex alignItems="center" justifyContent="center" bg="teal.500" color="white" borderRadius="full" width="24px" height="24px" mr={3}>
+                    <Text fontSize="sm" fontWeight="bold">
+                      {currentStep}
+                    </Text>
+                  </Flex>
+                  <Text fontSize="md" fontWeight="bold">
+                    {currentStep === 1 ? 'Leistungen' : currentStep === 2 ? 'Termin' : 'Persönliche Daten'}
                   </Text>
                 </Flex>
-                <Text fontSize="md" fontWeight="bold">
-                  Leistungen
-                </Text>
-              </Flex>
-              {selectedServices.length > 0 ? (
                 <VStack align="stretch" spacing={2}>
                   {selectedServices.map((service) => (
                     <Text key={service.id} fontSize="sm">{service.title}</Text>
@@ -490,53 +504,75 @@ const Terminvereinbarung = () => {
                   {examinationType && (
                     <Text fontSize="sm" fontWeight="bold" mt={2}>{examinationType}</Text>
                   )}
+                  {selectedDate && selectedTime && (
+                    <Text fontSize="sm">{`${selectedDate.toLocaleDateString()} um ${selectedTime}`}</Text>
+                  )}
+                  {currentStep === 3 && Object.keys(clientData).length > 0 && (
+                    <Text fontSize="sm">{`${clientData.firstName} ${clientData.lastName}`}</Text>
+                  )}
                 </VStack>
-              ) : (
-                <Text fontSize="sm" color="gray.600">
-                  Bitte wählen Sie Ihre gewünschten Leistungen aus
-                </Text>
-              )}
+              </Box>
             </Box>
-          </Box>
+          </Flex>
+        </Container>
+
+        <Flex justifyContent="space-between" mt={8} alignItems="center" px={4}>
+          <Flex>
+            {[1, 2, 3].map((step) => (
+              <React.Fragment key={step}>
+                <Box
+                  bg={currentStep >= step ? "teal.500" : "gray.300"}
+                  color="white"
+                  borderRadius="full"
+                  width="24px"
+                  height="24px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  mr={2}
+                >
+                  {step}
+                </Box>
+                <Text 
+                fontWeight={currentStep === step ? "bold" : "normal"} 
+                color={currentStep === step ? "teal.500" : "gray.500"}
+                >
+                  {step === 1 
+                  ? 'Leistungen' 
+                  : step === 2 
+                  ? 'Termin wählen' 
+                  : 'Daten eingeben'}
+                </Text>
+                {step < 3 && <Text mx={2} color="gray.400">&gt;</Text>}
+              </React.Fragment>
+            ))}
+          </Flex>
+          {currentStep > 1 && (
+            <Button onClick={handlePrevStep} mr={2}>
+              Zurück
+            </Button>
+          )}
+          {currentStep < 3 ? (
+            <Button
+              colorScheme="teal"
+              onClick={handleNextStep}
+              isDisabled={
+                (currentStep === 1 && (selectedServices.length === 0 || (showExaminationType && !examinationType))) ||
+                (currentStep === 2 && (!selectedDate || !selectedTime))
+              }
+            >
+              Weiter
+            </Button>
+          ) : (
+            <Button
+              colorScheme="teal"
+              onClick={handleSubmit}
+              isDisabled={Object.keys(clientData).length === 0}
+            >
+              Termin Buchen
+            </Button>
+          )}
         </Flex>
-      </Container>
-        <Box my={6} align="center">
-          <Button
-            as={NextLink}
-            href="/"
-            bgGradient="linear(to-r, #3cd3ad, #6dd5fa)"
-          >
-            {t('terminvereinbarung.button')}
-          </Button>
-        </Box>
-        <Flex justifyContent="space-between" mt={8} alignItems="center">
-        <Flex>
-          <Box
-            bg="teal.500"
-            color="white"
-            borderRadius="full"
-            width="24px"
-            height="24px"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            mr={2}
-          >
-            1
-          </Box>
-          <Text fontWeight="bold" color="teal.500">Leistungen</Text>
-          <Text mx={2} color="gray.400">&gt;</Text>
-          <Text color="gray.400">Termin wählen</Text>
-          <Text mx={2} color="gray.400">&gt;</Text>
-          <Text color="gray.400">Daten eingeben</Text>
-        </Flex>
-        <Button
-          colorScheme="teal"
-          isDisabled={selectedServices.length === 0 || (showExaminationType && !examinationType)}
-        >
-          WEITER ZUR TERMINAUSWAHL
-        </Button>
-      </Flex>
       </Container>
     </Layout>
   )
