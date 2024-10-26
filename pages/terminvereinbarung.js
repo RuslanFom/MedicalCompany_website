@@ -14,7 +14,6 @@ import {
   AccordionIcon,
   Flex,
   VStack,
-  Icon
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useTranslation } from 'next-i18next'
