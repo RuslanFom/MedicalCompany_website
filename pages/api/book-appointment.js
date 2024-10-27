@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         pass: "cang bwhl ufel lnxm",
       },
     });
-
+      
     // Формирование содержимого email
     let mailOptions = {
       from: '"CompanyMedics" <ruslanfom@gmail.com>',
