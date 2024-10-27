@@ -15,8 +15,7 @@ import {
   Flex,
   VStack,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
-import { useTranslation } from 'next-i18next'
+/* import { useTranslation } from 'next-i18next' */
 import React, { useState } from 'react'
 import { CheckIcon } from '@chakra-ui/icons'
 import Calendar from '../components/Calendar';
@@ -237,7 +236,7 @@ const serviceCategories = [
 ]
 
 const Terminvereinbarung = () => {
-  const { t } = useTranslation('common')
+  /* const { t } = useTranslation('common') */
   const [currentStep, setCurrentStep] = useState(1)
   const [expandedIndex, setExpandedIndex] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
