@@ -22,7 +22,8 @@ const Calendar = ({ onDateTimeSelect }) => {
     setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
   };
 
-  const handleTimeSelect = (time) => {
+  const handleTimeSelect = (e) => {
+    const time = e.target.value;
     setSelectedTime(time);
     onDateTimeSelect(selectedDate, time);
   };
@@ -63,10 +64,15 @@ const Calendar = ({ onDateTimeSelect }) => {
       {selectedDate && (
         <VStack mt={4} align="stretch">
           <Text>Verfügbare Zeiten:</Text>
-          <Select placeholder="Wählen Sie eine Zeit" onChange={(e) => handleTimeSelect(e.target.value)}>
+          <Select placeholder="Wählen Sie eine Zeit" onChange={handleTimeSelect} value={selectedTime || ''}>
             <option value="10:00">10:00</option>
             <option value="11:00">11:00</option>
             <option value="12:00">12:00</option>
+            <option value="13:00">13:00</option>
+            <option value="14:00">14:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+            <option value="17:00">17:00</option>
             {/* Добавьте больше вариантов времени по необходимости */}
           </Select>
         </VStack>
